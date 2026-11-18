@@ -50,14 +50,10 @@ def find_similar(word: str, data, distance=0):
     similar_words = set()
     # normalizace velkych pismen
     word = word.lower()
-    if distance == 0:
-        if word in data:
-            return set([word])
-    else:
-        for data_word in data:
-            data_distance = levenshtein(word, data_word)
-            if data_distance == distance:
-                similar_words.add(data_word)
+    for data_word in data:
+        data_distance = levenshtein(word, data_word)
+        if data_distance == distance:
+            similar_words.add(data_word)
 
     return similar_words
 
