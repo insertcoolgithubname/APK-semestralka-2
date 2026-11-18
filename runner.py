@@ -30,7 +30,7 @@ print("podobná slova:", similar)
 # load test/reference data
 
 
-ref_files = ["CZ_KKY_APK_dump.ref-1.pkl", "CZ_KKY_APK_dump.ref-2.pkl"]
+ref_files = ["CZ_KKY_APK_dump.ref-1.pkl", "CZ_KKY_APK_dump.ref-2.pkl", "CZ_KKY_APK_dump.ref.pkl"]
 refs = {}
 for ref_file in ref_files:
     with open(ref_file, "rb") as f:

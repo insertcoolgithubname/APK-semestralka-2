@@ -2,9 +2,9 @@
 from pathlib import Path
 
 
-def initialize(filepath, coding = "cp1250"):
-    ''' 
-    vstup: 
+def initialize(filepath, coding="cp1250"):
+    '''
+    vstup:
       * filepath - soubor se vstupním textem
       * coding - kódování vstupního textu
     výstup:
@@ -45,6 +45,8 @@ def find_similar(word: str, data, distance=0):
     # distance je presne ta vzdalenost, ne maximalne
     # Pozn.: budeme uvažovat max(distance) = 10
 
+    # ma cenu porovnavat jenom rozdil vzdalenosti mensi nez chyba (nebo podobne)
+
     similar_words = set()
     # normalizace velkych pismen
     word = word.lower()
@@ -76,7 +78,8 @@ def levenshtein(a, b):
 
 if __name__ == "__main__":
     data = initialize("CZ_KKY_APK_dump.txt", "utf-8")
-    print(find_similar(u"dobrý", data, 1))
-    print(find_similar(u"nemocenské", data, 5))
+    # print(find_similar(u"dobrý", data, 1))
+    # print(find_similar(u"nemocenské", data, 5))
+    # print(find_similar(u"jXXXXXednatřicetiletéhoXXXXX", data, 9))
     # print(levenshtein('kitten', 'sitting'))
     # print(levenshtein(['zapni', 'světlo'], ['zapni', 'světla']))
