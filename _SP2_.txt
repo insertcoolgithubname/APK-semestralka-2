@@ -1,0 +1,49 @@
+SP2
+--------------------------------
+cílem této práce je načíst a zpracovat "velký" textový soubor, který umožní analýzu slov obsažených, tj. zjistit, zda obsahuje konkrétní slovo,
+případně najít nejpodobnější slovo ve smyslu počtu rozdílných/vložených/vynechaných znaků.
+Hlavním úkolem metody initialize je načíst vstupní textový soubor, ale může si ho i předzpracovat.
+Vyhodnocení proběhne na testovací sadě (budou hledána slova s různou vzdáleností od hledaného slova).
+Při návrhu řešení se zaměřte na rychlost metody find_similar.
+
+Pozn.: vzdálenost = Levenshteinova vzdálenost (záměna, vložení i vynechání znaku = 1)
+Pozn.: písmeno "ch" je bráno jako dva znaky
+Pozn.: funkční kód pro python 3.12+, bez rozšiřujících knihoven
+Pozn.: budeme uvažovat max(distance) = 10
+
+interface:
+--------------------------------
+def initialize(filepath, coding = "cp1250"):
+    ''' 
+    vstup: 
+      * filepath - soubor se vstupním textem
+      * coding - kódování vstupního textu
+    výstup:
+      * data - metoda vrací "objekt" data. může to být cokoliv - seznam, slovník, množina, tupple, či jen "identifikátor"
+    '''
+    all_words = {}
+    return all_words
+
+def find_similar(word, data, distance = 0):
+    ''' 
+    vstup: 
+      * word - hledané slovo
+      * data - předzpracovaná data
+      * distance - počet rozdílů nalezených slov od hledaného slova (word). jeden rozdíl je roven např. jedné záměně, 
+        jednomu chybějícímu či přebývajícímu písmenku. 
+    výstup:
+      * data - metoda vrací množinu obsahující výsledek
+    '''
+    similar_words = set()
+    return similar_words
+    
+
+termín odevzdání
+--------------------------------
+15.12.2026 11:59 SEČ (funkční kód + dokumentace 1-2 str.)   prijmeni.py + prijmeni.pdf
+
+hodnocení
+--------------------------------
+20b včas odevzdaný funkční kód
+10b funkční kód
+bonus +5b za prezentaci pro 1+ nejlepší práce (nejrychlejší find_similar())
