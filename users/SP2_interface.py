@@ -50,7 +50,7 @@ def find_similar(word: str, data, distance=0):
     word = word.lower()
     if distance == 0:
         if word in data:
-            return word
+            return set([word])
     else:
         for data_word in data:
             data_distance = levenshtein(word, data_word)
