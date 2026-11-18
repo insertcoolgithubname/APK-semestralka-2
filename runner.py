@@ -2,6 +2,7 @@
 from users.SP2_interface import initialize, find_similar
 import pickle
 import time
+import users.SP2_interface_prvotni_verze as prvni
 
 # or make your own
 '''
@@ -19,13 +20,15 @@ def find_similar(word, data, distance = 0):
 
 
 start = time.time()
+data = prvni.initialize("CZ_KKY_APK_dump.txt", "utf-8")
+print("počet slov:", len(data), " - doba načtení:", time.time() - start)
+
+start = time.time()
 data = initialize("CZ_KKY_APK_dump.txt", "utf-8")
 print("počet slov:", len(data), " - doba načtení:", time.time() - start)
-#print("all words", data.keys())
 
-#test
 similar = find_similar("tabulka", data, distance = 1)
-print("podobná slova:", similar)
+# print("podobná slova:", similar)
 
 # load test/reference data
 
@@ -35,14 +38,35 @@ refs = {}
 for ref_file in ref_files:
     with open(ref_file, "rb") as f:
         refs[ref_file] = pickle.load(f)
-    print(ref_file, "- počet dotazů:", len(refs[ref_file]))
+    # print(ref_file, "- počet dotazů:", len(refs[ref_file]))
 
 # ukázka: klíč je (hledané slovo, vzdálenost), hodnota je množina nalezených slov
 ref = refs[ref_files[0]]
-print(list(ref.items())[:5])
-print(ref[("sazky", 2)])
+# print(list(ref.items())[:5])
+# print(ref[("sazky", 2)])
 
 # test my code
+prvni_total_time = 0
+for ref_file, ref in refs.items():
+    chyb = 0
+    cas = 0.0
+    for word, dist in ref:
+        start = time.time()
+        similar = prvni.find_similar(word, data, distance = dist)
+        cas += time.time() - start
+        #print(word, dist, similar)
+        chyb_local = ref[(word, dist)].symmetric_difference(similar)   # prvky jen v jedné z množin
+        if len(chyb_local) > 0:
+            print("\nchyba    :", word, dist)
+            print("nalezeno :", similar)
+            print("správně  :", ref[(word, dist)])
+        chyb += len(chyb_local)
+    prvni_total_time += cas
+    print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
+
+
+# test my code
+real_total_time = 0
 for ref_file, ref in refs.items():
     chyb = 0
     cas = 0.0
@@ -57,4 +81,7 @@ for ref_file, ref in refs.items():
             print("nalezeno :", similar)
             print("správně  :", ref[(word, dist)])
         chyb += len(chyb_local)
+    real_total_time += cas
     print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
+
+print(f"pomer zrychleni {prvni_total_time/real_total_time}")
