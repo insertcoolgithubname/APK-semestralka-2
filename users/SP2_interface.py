@@ -48,6 +48,7 @@ def find_similar(word: str, data, distance=0):
     # ma cenu porovnavat jenom rozdil vzdalenosti mensi nez chyba (nebo podobne)
 
     similar_words = set()
+    len_of_word = len(word)
     # normalizace velkych pismen
     word = word.lower()
     if distance == 0:
@@ -55,6 +56,9 @@ def find_similar(word: str, data, distance=0):
             return set([word])
     else:
         for data_word in data:
+            # pokud je rozdil vetsi nez vzdalenost, nejde se na to slovo dostat, preskocim
+            if abs(len(data_word) - len_of_word) > distance:
+                continue
             data_distance = levenshtein(word, data_word)
             if data_distance == distance:
                 similar_words.add(data_word)
