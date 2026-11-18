@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
+from math import inf
 
 
 def initialize(filepath, coding="cp1250"):
@@ -59,20 +60,23 @@ def find_similar(word: str, data, distance=0):
             # pokud je rozdil vetsi nez vzdalenost, nejde se na to slovo dostat, preskocim
             if abs(len(data_word) - len_of_word) > distance:
                 continue
-            data_distance = levenshtein(word, data_word)
+            data_distance = levenshtein(word, data_word, distance)
             if data_distance == distance:
                 similar_words.add(data_word)
 
     return similar_words
 
 
-def levenshtein(a, b):
+def levenshtein(a, b, distance):
+    # staci pocitat pas ve vzdalenosti (distance) od hlavni diagonaly
+    # upravuji tuhle funkci pro hledani presne vzdalenosti, ne jako obecny levenshtein
     n, m = len(a), len(b)
-    D = [[0] * (m + 1) for _ in range(n + 1)]
+    D = [[inf] * (m + 1) for _ in range(n + 1)]
     for i in range(n + 1): D[i][0] = i
     for j in range(m + 1): D[0][j] = j
     for i in range(1, n + 1):
-        for j in range(1, m + 1):
+        # beru jenom pas o velikosti distance od hlavni diagonaly
+        for j in range(max(1, i-distance), min(m, i+distance) + 1):
             D[i][j] = min(D[i-1][j] + 1,  # smazání
                           D[i][j-1] + 1,  # vložení
                           D[i-1][j-1] + (a[i-1] != b[j-1]))
