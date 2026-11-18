@@ -10,7 +10,7 @@ def initialize(filepath, coding = "cp1250"):
     výstup:
       * data - metoda vrací "objekt" data. může to být cokoliv - seznam, slovník, množina, tupple, či jen "identifikátor"
     '''
-    all_words = {}
+    all_words = set()
     with Path(filepath).open("r", encoding=coding) as f:
         for line in f:
             line_list = line.split()
@@ -32,10 +32,7 @@ def initialize(filepath, coding = "cp1250"):
 
                 if any(char == word for char in ["-", "", "%"]):
                     continue
-                if word in all_words.keys():
-                    all_words[word] += 1
-                else:
-                    all_words[word] = 1
+                all_words.add(word)
 
     return all_words
 
