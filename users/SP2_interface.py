@@ -19,14 +19,9 @@ def initialize(filepath, coding = "cp1250"):
                 debug = word
                 # nahradim nechtene znaky
                 # mozna bude lepsi proste rstrip, lstrip
-                trans = str.maketrans({'.': None, '"': None, "'": None, ",": None, "(": None, ")": None,
-                                       "-": None, "?": None, "!": None, "@": None, "[": None, "]": None})
+                chars_to_strip = r".\"',()[]-?!@"
                 # jenom na konci a zacatku
-                if len(word) > 1:
-                    word = word[0].translate(trans) + word[1:-1] + word[-1].translate(trans)
-                # pokud je slovo jen o delce 1, nahrazuji na celem
-                else:
-                    word = word.translate(trans)
+                word = word.lstrip(chars_to_strip).rstrip(chars_to_strip)
                 # porovnavame jako lowercase
                 word = word.lower()
 
