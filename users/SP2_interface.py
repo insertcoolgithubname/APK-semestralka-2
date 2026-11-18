@@ -3,6 +3,11 @@ from pathlib import Path
 from math import inf
 
 
+# ukladani mezivysledku, pokud se ptame dvakrat na stejnou vec
+# dict, klic je tuple word a distance, value je set vracenych podobnych slov dane distance
+seen = {}
+
+
 def initialize(filepath, coding="cp1250"):
     '''
     vstup:
@@ -56,6 +61,9 @@ def find_similar(word: str, data, distance=0):
         if word in data:
             return set([word])
     else:
+        # zkontroluju, jestli uz jsem videl nekdy videl tuto otazku
+        if (word, distance) in seen:
+            return seen[(word, distance)]
         for data_word in data:
             # pokud je rozdil vetsi nez vzdalenost, nejde se na to slovo dostat, preskocim
             if abs(len(data_word) - len_of_word) > distance:
@@ -64,6 +72,8 @@ def find_similar(word: str, data, distance=0):
             if data_distance == distance:
                 similar_words.add(data_word)
 
+    # nez vratim, pridam ji do uz videnych otazek
+    seen[(word, distance)] = similar_words
     return similar_words
 
 
