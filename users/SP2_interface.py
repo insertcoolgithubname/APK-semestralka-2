@@ -18,8 +18,9 @@ def initialize(filepath, coding = "cp1250"):
             for word in line_list:
                 debug = word
                 # nahradim nechtene znaky
+                # mozna bude lepsi proste rstrip, lstrip
                 trans = str.maketrans({'.': None, '"': None, "'": None, ",": None, "(": None, ")": None,
-                                       "-": None})
+                                       "-": None, "?": None, "!": None, "@": None, "[": None, "]": None})
                 # jenom na konci a zacatku
                 if len(word) > 1:
                     word = word[0].translate(trans) + word[1:-1] + word[-1].translate(trans)
@@ -52,6 +53,7 @@ def find_similar(word, data, distance = 0):
       * data - metoda vrací množinu obsahující výsledek
     '''
     # distance je presne ta vzdalenost, ne maximalne takhle
+
     similar_words = set()
     return similar_words
     
