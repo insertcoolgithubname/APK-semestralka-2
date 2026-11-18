@@ -19,7 +19,7 @@ def initialize(filepath, coding = "cp1250"):
                 debug = word
                 # nahradim nechtene znaky
                 # mozna bude lepsi proste rstrip, lstrip
-                chars_to_strip = r".\"',()[]-?!@"
+                chars_to_strip = r".\"',()[]-?!@:"
                 # jenom na konci a zacatku
                 word = word.lstrip(chars_to_strip).rstrip(chars_to_strip)
                 # porovnavame jako lowercase
