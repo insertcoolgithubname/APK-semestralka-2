@@ -37,7 +37,7 @@ def initialize(filepath, coding = "cp1250"):
     return all_words
 
 
-def find_similar(word, data, distance = 0):
+def find_similar(word: str, data, distance=0):
     ''' 
     vstup: 
       * word - hledané slovo
@@ -51,6 +51,17 @@ def find_similar(word, data, distance = 0):
     # Pozn.: budeme uvažovat max(distance) = 10
 
     similar_words = set()
+    # normalizace velkych pismen
+    word = word.lower()
+    if distance == 0:
+        if word in data:
+            return word
+    else:
+        for data_word in data:
+            data_distance = levenshtein(word, data_word)
+            if data_distance == distance:
+                similar_words.add(data_word)
+
     return similar_words
 
 
@@ -71,5 +82,6 @@ def levenshtein(a, b):
 if __name__ == "__main__":
     data = initialize("CZ_KKY_APK_dump.txt", "utf-8")
     print(find_similar(u"dobrý", data, 1))
+    print(find_similar(u"nemocenské", data, 5))
     # print(levenshtein('kitten', 'sitting'))
     # print(levenshtein(['zapni', 'světlo'], ['zapni', 'světla']))
