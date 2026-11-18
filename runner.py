@@ -50,7 +50,7 @@ pocet_opakovani = 10
 prvni_total_time = 0
 real_total_time = 0
 
-for _ in range(pocet_opakovani):
+for momentalni_opakovani in range(pocet_opakovani):
     # reset 'seen' pro optimalizovanou verzi
     optimized.seen = {}
 
@@ -71,7 +71,7 @@ for _ in range(pocet_opakovani):
             chyb += len(chyb_local)
         total_chyby_prvni += chyb
         prvni_total_time += cas
-        print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
+        # print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
 
     total_chyby_optimalizovane = 0
     for ref_file, ref in refs.items():
@@ -90,7 +90,9 @@ for _ in range(pocet_opakovani):
             chyb += len(chyb_local)
         total_chyby_optimalizovane += chyb
         real_total_time += cas
-        print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
+        # print("\n%s - počet chyb: %d, čas find_similar: %.4f s\n" % (ref_file, chyb, cas))
+
+    print(f"completed pass: {momentalni_opakovani}")
 
 print(f"extra pocet chyb optimalizovane: {total_chyby_optimalizovane - total_chyby_prvni}")
 print(f"pomer zrychleni: {prvni_total_time/real_total_time}")
